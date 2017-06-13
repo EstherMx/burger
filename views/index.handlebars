@@ -1,64 +1,63 @@
-<div class="container">
-    <div class="jumbotron">
-        <img  src="/assets/img/boiger.png" class="img-circle" >
-        <h2> Burger Land! </h2>
+<h1>Burger Land!</h1>
 
+<img src="http://photos-ak.sparkpeople.com/nw/7/4/l746731963.jpg" class="my_images" alt="Profile pic">
+
+
+
+<div class="row">
+  <div class="col-lg-6">
+    <h2>Burgers to eat!</h2>
+
+      <ul>
+        {{#each burgers}}
+          {{#unless this.devoured}}
+            <li>
+              {{this.burger_name}}
+
+              <form action="/{{this.id}}?_method=PUT" method="POST">
+                <input type="hidden" name="devoured" value="true">
+                <button type="submit">Devour!</button>
+              </form>
+          </li>
+
+    {{/unless}}
+  {{/each}}
+</ul>
+
+<h2>Burgers devoured!</h2>
+
+<ul>
+  {{#each burgers}}
+    {{#if this.devoured}}
+      <li>
+        {{this.burger_name}}
+
+        <form action="/{{this.id}}?_method=PUT" method="POST">
+          <input type="hidden" name="devoured" value="false">
+         
+        </form>
+
+      </li>
+    {{/if}}
+  {{/each}}
+</ul>
+</div>
+
+<div class="col-lg-6">
+  <h2>Add a Burger</h2>
+  <form class="create-update-form" action="/" method="POST">
+
+    <div class="form-group">
+      <label for="bur">Burger Name:</label>
+      <input type="text" id="bur" name="burger_name">
     </div>
 
-    {{!-- burger list before being eaten --}}
-    <div class="row">
-        <div class="col-md-4 col-md-offset-1">
-            <div class="panel-panel default">
-                <ul class="list-group">
-                    {{#each burgers}}
-                        {{#unless this.devoured}}
-                            <li class="list-group-item">
-                                <div class="input-group">
-                                    <p class="lead"> {{this.burger_name}} </p>
-                                    <span class="input-group-btn">
-                <form action="/{{this.id}}?_method=PUT" method="POST">
-                  <input type="hidden" name="devoured" value="true">
-                  <button class="btn btn-default btn-lg" type="submit"> DEVOURED! </button>
-                </form>
-              </span>
-                                </div>
-                            </li>
-                        {{/unless}}
-                    {{/each}}
-                </ul>
-            </div>
-        </div>
-
-
-        {{!-- burger list after being eaten --}}
-        <div class="row">
-            <div class="col-md-4 col-md-offset-2">
-                <div class="panel panel-default">
-                    <ul class="list-group">
-                        {{#each burgers}}
-                            {{#if this.devoured}}
-                                <li class="list-group-item">
-                                    <p class="lead">{{this.burger_name}} </p>
-                                </li>
-                            {{/if}}
-                        {{/each}}
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-10 col-md-offset-1">
-            <p class="enter"> Enter the name of a burger </p>
-
-            {{!-- section to add burgers --}}
-            <form class="create-update-form" action="/" method="POST">
-
-                <div class="form-group">
-                    <textarea class="form-control input-sm" type="text" name="burger_name" rows="3" > </textarea>
-
-                </div>
-
-                <center><button class="btn btn-default btn-lg" type="submit">Add Burger!</button></center>
-            </form>
-        </div>
+    <div class="form-group">
+      <label for="dev"> </label><br>
+      <input type="radio" name="devoured" value="1" > Devoured!<br>
+      <input type="radio" name="devoured" value="0"> To Eat!
     </div>
+  </div>
+
+  <button type="submit">Add burger</button>
+</form>
